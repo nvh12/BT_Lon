@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.screens.MainMenu;
-import com.mygdx.game.screens.MainScreen;
+import com.mygdx.game.Screens.MainMenu;
+import com.mygdx.game.Screens.MainScreen;
 
 public class MyGdxGame extends Game {
 	public SpriteBatch batch;
