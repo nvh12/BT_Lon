@@ -1,4 +1,4 @@
-package com.mygdx.game.screens;
+package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,38 +13,38 @@ import java.util.Random;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
-
-public class MainScreen implements Screen{
+public class MainScreen implements Screen {
     private float elapsedTime = 0.0f;
     private static final float UPDATE_INTERVAL = 0.1f;
     public static final float SPEED = 100;
     public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.3f;
     public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 1f;
-
+    public static final float fish_x = 80, fish_y = 80;
     Texture img;
     Random random1 = new Random();
     float x_coordinates, y_coordinates;
-    float fish_summon_timer  ;
+    float fish_summon_timer;
     MyGdxGame game;
 
     ArrayList<Fish_to_eat> fishToEats;
-    public MainScreen(MyGdxGame game){
+
+    public MainScreen(MyGdxGame game) {
         this.game = game;
-        fish_summon_timer = random1.nextFloat()*(MAX_FISH_TO_EAT_SUMMON_TIME-MIN_FISH_TO_EAT_SUMMON_TIME)+MIN_FISH_TO_EAT_SUMMON_TIME;
+        fish_summon_timer = random1.nextFloat() * (MAX_FISH_TO_EAT_SUMMON_TIME - MIN_FISH_TO_EAT_SUMMON_TIME)
+                + MIN_FISH_TO_EAT_SUMMON_TIME;
         fishToEats = new ArrayList<Fish_to_eat>();
     }
 
-    //Tạo ảnh cá
-    public void show(){
-        img = new Texture("Mainfish2.png");
-        //ảnh cá tạm thời
+    // Tạo ảnh cá
+    public void show() {
+        img = new Texture("Mainfish1.png");
+        // ảnh cá tạm thời
     }
 
-
-
-    //Quay cá theo hướng di chuyển của chuột
+    // Quay cá theo hướng di chuyển của chuột
     private Vector2 lastMousePosition = new Vector2();
-    public void render(float delta){
+
+    public void render(float delta) {
         // Cập nhật thời gian đã trôi qua
         elapsedTime += delta;
 
@@ -66,60 +66,70 @@ public class MainScreen implements Screen{
             elapsedTime -= UPDATE_INTERVAL;
         }
 
-
-
-        //Tạo mấy con cá cảnh lượn lờ
+        // Tạo mấy con cá cảnh lượn lờ
         fish_summon_timer -= delta;
-        if(fish_summon_timer<=0){
-            fish_summon_timer = random1.nextFloat()*(MAX_FISH_TO_EAT_SUMMON_TIME-MIN_FISH_TO_EAT_SUMMON_TIME)+MIN_FISH_TO_EAT_SUMMON_TIME;
-            int index_type_of_fish = random.nextInt(5)+1;
+        if (fish_summon_timer <= 0) {
+            fish_summon_timer = random1.nextFloat() * (MAX_FISH_TO_EAT_SUMMON_TIME - MIN_FISH_TO_EAT_SUMMON_TIME)
+                    + MIN_FISH_TO_EAT_SUMMON_TIME;
+            int index_type_of_fish = random.nextInt(5) + 1;
             fishToEats.add(new Fish_to_eat(index_type_of_fish));
         }
 
-        //Xóa mấy con cá cảnh
+        // Xóa mấy con cá cảnh
         ArrayList<Fish_to_eat> fishToEatsremove = new ArrayList<Fish_to_eat>();
-        for(Fish_to_eat fishToEat : fishToEats){
+        for (Fish_to_eat fishToEat : fishToEats) {
             fishToEat.update(delta);
-            if(fishToEat.remove)
+            if (fishToEat.remove)
                 fishToEatsremove.add(fishToEat);
         }
         fishToEats.removeAll(fishToEatsremove);
 
-        //Đặt vị trí cho cá chính
-        x_coordinates = Gdx.input.getX()-30;
-        y_coordinates = 690 - Gdx.input.getY();
-        if(x_coordinates<0){
+        // Đặt vị trí cho cá chính
+        x_coordinates = Gdx.input.getX() - 40;
+        y_coordinates = 680 - Gdx.input.getY();
+        if (x_coordinates < 0) {
             x_coordinates = 0;
         }
-        if(x_coordinates+img.getWidth()>Gdx.graphics.getWidth()){
-            x_coordinates = Gdx.graphics.getWidth()- img.getWidth();
+        if (x_coordinates + fish_x > Gdx.graphics.getWidth()) {
+            x_coordinates = Gdx.graphics.getWidth() - fish_x;
         }
-        //di chuyển cá
+        if (y_coordinates < 0) {
+            y_coordinates = 0;
+        }
+        if (y_coordinates > Gdx.graphics.getHeight() - fish_y) {
+            y_coordinates = Gdx.graphics.getHeight() - fish_y;
+        }
+        // di chuyển cá
         Gdx.gl.glClearColor(0.1f, 0.637f, 0.9f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //nền
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // nền
         game.batch.begin();
-        for (Fish_to_eat fishToEat : fishToEats){
+        for (Fish_to_eat fishToEat : fishToEats) {
             fishToEat.render(game.batch);
         }
         game.batch.draw(img, x_coordinates, y_coordinates, 80, 80);
-        //vẽ cá
+        // vẽ cá
         game.batch.end();
     }
-    public void resize(int width, int height){
+
+    public void resize(int width, int height) {
 
     }
-    public void pause(){
+
+    public void pause() {
 
     }
-    public void resume(){
+
+    public void resume() {
 
     }
-    public void hide(){
+
+    public void hide() {
 
     }
-    public void dispose(){
+
+    public void dispose() {
 
     }
-    //Hello
+    // Hello
 }
