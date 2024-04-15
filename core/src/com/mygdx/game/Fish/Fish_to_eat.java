@@ -23,7 +23,7 @@ public class Fish_to_eat {
         x = x_value_arr[x_summon_location];
         y = random.nextFloat()*(Gdx.graphics.getHeight()-WIDTH);
         int fish_choose = random.nextInt(5);
-        texture = new Texture("fish.png");
+        texture = new Texture("fish"+i+".png");
 
     }
 

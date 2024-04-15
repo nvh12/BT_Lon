@@ -85,8 +85,8 @@ public class MainScreen implements Screen {
         fishToEats.removeAll(fishToEatsremove);
 
         // Đặt vị trí cho cá chính
-        x_coordinates = Gdx.input.getX() - 40;
-        y_coordinates = 680 - Gdx.input.getY();
+        x_coordinates = Gdx.input.getX() - fish_x/2;
+        y_coordinates = Gdx.graphics.getHeight() - Gdx.input.getY() - fish_y/2;
         if (x_coordinates < 0) {
             x_coordinates = 0;
         }

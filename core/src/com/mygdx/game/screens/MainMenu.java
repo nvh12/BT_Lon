@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MainMenu implements Screen{
-    private static final int exitButtonSize = 30, playButtonSize = 100;
+    private static final int exitButtonSize = Gdx.graphics.getHeight()/24, playButtonSize = Gdx.graphics.getHeight()*5/36;
     MyGdxGame game;
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -29,25 +29,25 @@ public class MainMenu implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //nền
         game.batch.begin();
-        if(Gdx.input.getX() >= 1220 && Gdx.input.getY() <= 60){
-            game.batch.draw(exitButtonInactive, 1250, 690, exitButtonSize, exitButtonSize);
+        if(Gdx.input.getX() >= Gdx.graphics.getWidth()-exitButtonSize && Gdx.input.getY() <= exitButtonSize){
+            game.batch.draw(exitButtonInactive, Gdx.graphics.getWidth()-exitButtonSize, Gdx.graphics.getHeight()-exitButtonSize, exitButtonSize, exitButtonSize);
             if(Gdx.input.isTouched()){
                 Gdx.app.exit();
             }
         } 
         else{
-            game.batch.draw(exitButtonActive, 1250, 690, exitButtonSize, exitButtonSize);
+            game.batch.draw(exitButtonActive, Gdx.graphics.getWidth()-exitButtonSize, Gdx.graphics.getHeight()-exitButtonSize, exitButtonSize, exitButtonSize);
         }
         //nút thoát
-        if(Gdx.input.getX() >= 590 && Gdx.input.getX() <= 690 && Gdx.input.getY() >= 380 && Gdx.input.getY() <= 480){
-            game.batch.draw(playButtonInactive, 590, 240, playButtonSize, playButtonSize);
+        if(Gdx.input.getX() >= Gdx.graphics.getWidth()/2-playButtonSize/2 && Gdx.input.getX() <= Gdx.graphics.getWidth()/2+playButtonSize/2 && Gdx.input.getY() >= Gdx.graphics.getHeight()*2/3-playButtonSize/2 && Gdx.input.getY() <= Gdx.graphics.getHeight()*2/3+playButtonSize/2){
+            game.batch.draw(playButtonInactive, Gdx.graphics.getWidth()/2-playButtonSize/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize, playButtonSize);
             if(Gdx.input.isTouched()){
                 this.dispose();
                 game.setScreen(new MainScreen(game));
             }
         }
         else{
-            game.batch.draw(playButtonActive, 590, 240, playButtonSize, playButtonSize);
+            game.batch.draw(playButtonActive, Gdx.graphics.getWidth()/2-playButtonSize/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize, playButtonSize);
         }
         //nút chơi
         game.batch.end();
