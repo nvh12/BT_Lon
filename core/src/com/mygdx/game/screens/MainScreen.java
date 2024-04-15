@@ -12,15 +12,15 @@ public class MainScreen implements Screen{
     public static final float fish_x = 175, fish_y =110;
     public static final float speed = 100, animationSpeed = 0.5f;
     int score = 0, level = 1;
-    Animation[] fishAnimations;
+    //Animation[] fishAnimations;
     Texture img_1, img_2;
     MyGdxGame game;
     float x, y, a, stateTime;
     public MainScreen(MyGdxGame game){
         this.game = game;
-        fishAnimations = new Animation[1];
+        /*fishAnimations = new Animation[1];
         TextureRegion[][] fishSpriteSheet = TextureRegion.split(new Texture("red.png"), (int)fish_x, (int)fish_y);
-        fishAnimations[0] = new Animation<TextureRegion>(animationSpeed, fishSpriteSheet[0]);
+        fishAnimations[0] = new Animation<TextureRegion>(animationSpeed, fishSpriteSheet[0]);*/
     }
     public void show(){
         img_1 = new Texture("pixil-frame-1.png");
