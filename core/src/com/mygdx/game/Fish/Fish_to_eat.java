@@ -9,17 +9,17 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class Fish_to_eat {
     public static final int SPEED = 150;
     public static final int WIDTH = 0;
-    private static Texture texture;
+    private Texture texture;
     float x,y;
     public boolean remove = false;
+    private int x_summon_location =random.nextInt(2);
     public void show(){
     }
 
 
-    private int x_summon_location =random.nextInt(2);
+    
     public Fish_to_eat(int i){
-        int[] x_value_arr = new int[2];
-        x_value_arr[1] = Gdx.graphics.getWidth();
+        int[] x_value_arr = {0, Gdx.graphics.getWidth()};
         x = x_value_arr[x_summon_location];
         y = random.nextFloat()*(Gdx.graphics.getHeight()-WIDTH);
         int fish_choose = random.nextInt(5);
