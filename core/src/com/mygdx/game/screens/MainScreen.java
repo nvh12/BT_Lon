@@ -10,6 +10,7 @@ import com.mygdx.game.MyGdxGame;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.lang.Math;
 
 import static com.badlogic.gdx.math.MathUtils.random;
 
@@ -19,7 +20,7 @@ public class MainScreen implements Screen {
     public static final float SPEED = 100;
     public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.5f;
     public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 1f;
-    public static final float fish_x = 80, fish_y = 80;
+    public static final float size = 80;
     Texture img;
     Random random1 = new Random();
     float x_coordinates, y_coordinates;
@@ -81,23 +82,27 @@ public class MainScreen implements Screen {
             fishToEat.update(delta);
             if (fishToEat.remove)
                 fishToEatsremove.add(fishToEat);
+            float a = fishToEat.x - x_coordinates, b = fishToEat.y - y_coordinates;
+            if(Math.abs(a)<=(Fish_to_eat.size*fishToEat.level+size)/2 && Math.abs(b)<=(Fish_to_eat.size*fishToEat.level+size)/2){
+                fishToEatsremove.add(fishToEat);
+            }
         }
         fishToEats.removeAll(fishToEatsremove);
 
         // Đặt vị trí cho cá chính
-        x_coordinates = Gdx.input.getX() - fish_x/2;
-        y_coordinates = Gdx.graphics.getHeight() - Gdx.input.getY() - fish_y/2;
-        if (x_coordinates < 0) {
-            x_coordinates = 0;
+        x_coordinates = Gdx.input.getX();
+        y_coordinates = Gdx.graphics.getHeight() - Gdx.input.getY();
+        if (x_coordinates < size) {
+            x_coordinates = size;
         }
-        if (x_coordinates + fish_x > Gdx.graphics.getWidth()) {
-            x_coordinates = Gdx.graphics.getWidth() - fish_x;
+        if (x_coordinates + size > Gdx.graphics.getWidth()) {
+            x_coordinates = Gdx.graphics.getWidth() - size;
         }
-        if (y_coordinates < 0) {
-            y_coordinates = 0;
+        if (y_coordinates < size) {
+            y_coordinates = size;
         }
-        if (y_coordinates > Gdx.graphics.getHeight() - fish_y) {
-            y_coordinates = Gdx.graphics.getHeight() - fish_y;
+        if (y_coordinates > Gdx.graphics.getHeight() - size) {
+            y_coordinates = Gdx.graphics.getHeight() - size;
         }
         // di chuyển cá
         Gdx.gl.glClearColor(0.1f, 0.637f, 0.9f, 1);
@@ -107,7 +112,7 @@ public class MainScreen implements Screen {
         for (Fish_to_eat fishToEat : fishToEats) {
             fishToEat.render(game.batch);
         }
-        game.batch.draw(img, x_coordinates, y_coordinates, 80, 80);
+        game.batch.draw(img, x_coordinates-size/2, y_coordinates-size/2, size, size);
         // vẽ cá
         game.batch.end();
     }

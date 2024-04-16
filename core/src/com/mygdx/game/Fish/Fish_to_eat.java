@@ -12,7 +12,7 @@ public class Fish_to_eat {
     public static final float size = 80;
     public float level = 1;
     private Texture texture;
-    float x,y;
+    public float x,y;
     public boolean remove = false;
     private int x_summon_location =random.nextInt(2);
     public void show(){
