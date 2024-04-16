@@ -2,11 +2,13 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Fish.Fish_to_eat;
 import com.mygdx.game.MyGdxGame;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,12 +22,15 @@ public class MainScreen implements Screen {
     public static final float SPEED = 100;
     public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.5f;
     public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 1f;
-    public static final float size = 80;
+    public static final float start_size = 80;
+    public float size;
+    private int score, level, levelProgress;
     Texture img;
     Random random1 = new Random();
     float x_coordinates, y_coordinates;
     float fish_summon_timer;
     MyGdxGame game;
+    private BitmapFont font;
 
     ArrayList<Fish_to_eat> fishToEats;
 
@@ -34,11 +39,18 @@ public class MainScreen implements Screen {
         fish_summon_timer = random1.nextFloat() * (MAX_FISH_TO_EAT_SUMMON_TIME - MIN_FISH_TO_EAT_SUMMON_TIME)
                 + MIN_FISH_TO_EAT_SUMMON_TIME;
         fishToEats = new ArrayList<Fish_to_eat>();
+        img = new Texture("Mainfish1.png");
+        font = new BitmapFont();
+        font.setColor(Color.BLACK);
+        score = 0;
+        level = 1;
+        levelProgress = 0;
+        size = start_size;
     }
 
     // Tạo ảnh cá
     public void show() {
-        img = new Texture("Mainfish1.png");
+        
         // ảnh cá tạm thời
     }
 
@@ -83,11 +95,18 @@ public class MainScreen implements Screen {
             if (fishToEat.remove)
                 fishToEatsremove.add(fishToEat);
             float a = fishToEat.x - x_coordinates, b = fishToEat.y - y_coordinates;
-            if(Math.abs(a)<=(fishToEat.size+size)/2 && Math.abs(b)<=(fishToEat.size+size)/2){
+            if(Math.abs(a)<=(fishToEat.size+size)/2 && Math.abs(b)<=(fishToEat.size+size)/2 && level>=fishToEat.level){
                 fishToEatsremove.add(fishToEat);
+                score++;
+                levelProgress++;
             }
         }
         fishToEats.removeAll(fishToEatsremove);
+        if(levelProgress == 7){
+            levelProgress = 0;
+            level++;
+            size += 10;
+        }
 
         // Đặt vị trí cho cá chính
         x_coordinates = Gdx.input.getX();
@@ -114,6 +133,8 @@ public class MainScreen implements Screen {
         }
         game.batch.draw(img, x_coordinates-size/2, y_coordinates-size/2, size, size);
         // vẽ cá
+        font.draw(game.batch, Integer.toString(score), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-100);
+        font.draw(game.batch, Integer.toString(levelProgress), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-150);
         game.batch.end();
     }
 
