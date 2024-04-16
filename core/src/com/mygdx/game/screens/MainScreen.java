@@ -106,24 +106,24 @@ public class MainScreen implements Screen {
         if(levelProgress == 10 && level <= 3){
             levelProgress = 0;
             level++;
-            size+=10;
+            size+=25;
         }
 
         // Đặt vị trí cho cá chính
         // di chuyển cá
         x_coordinates = Gdx.input.getX();
         y_coordinates = Gdx.graphics.getHeight() - Gdx.input.getY();
-        if (x_coordinates < size) {
-            x_coordinates = size;
+        if (x_coordinates < size/2) {
+            x_coordinates = size/2;
         }
-        if (x_coordinates + size > Gdx.graphics.getWidth()) {
-            x_coordinates = Gdx.graphics.getWidth() - size;
+        if (x_coordinates  > Gdx.graphics.getWidth() - size/2) {
+            x_coordinates = Gdx.graphics.getWidth() - size/2;
         }
-        if (y_coordinates < size) {
-            y_coordinates = size;
+        if (y_coordinates < size/2) {
+            y_coordinates = size/2;
         }
-        if (y_coordinates > Gdx.graphics.getHeight() - size) {
-            y_coordinates = Gdx.graphics.getHeight() - size;
+        if (y_coordinates > Gdx.graphics.getHeight() - size/2) {
+            y_coordinates = Gdx.graphics.getHeight() - size/2;
         }
         // nền
         Gdx.gl.glClearColor(0.1f, 0.637f, 0.9f, 1);

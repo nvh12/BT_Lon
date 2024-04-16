@@ -22,7 +22,7 @@ public class Fish_to_eat {
     public Fish_to_eat(int i){
         int[] x_value_arr = {0, Gdx.graphics.getWidth()};
         this.x = x_value_arr[x_summon_location];
-        this.y = random.nextFloat()*(Gdx.graphics.getHeight());
+        this.y = random.nextFloat()*(Gdx.graphics.getHeight()*8/10)+Gdx.graphics.getHeight()/10;
         this.texture = new Texture("fish"+i+"."+x_summon_location+".png");
         this.level = random.nextInt(5);
         this.size = (float)(default_size*(1+level*size_increase));
