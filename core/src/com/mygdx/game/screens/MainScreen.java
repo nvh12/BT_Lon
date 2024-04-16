@@ -43,7 +43,7 @@ public class MainScreen implements Screen {
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         score = 0;
-        level = 1;
+        level = 0;
         levelProgress = 0;
         size = start_size;
     }
@@ -98,17 +98,19 @@ public class MainScreen implements Screen {
             if(Math.abs(a)<=(fishToEat.size+size)/2 && Math.abs(b)<=(fishToEat.size+size)/2 && level>=fishToEat.level){
                 fishToEatsremove.add(fishToEat);
                 score++;
-                levelProgress++;
+                if(level<=3) levelProgress++;
             }
         }
         fishToEats.removeAll(fishToEatsremove);
-        if(levelProgress == 7){
+        // ăn đủ 10 con thì lên level
+        if(levelProgress == 10 && level <= 3){
             levelProgress = 0;
             level++;
-            size += 10;
+            size+=10;
         }
 
         // Đặt vị trí cho cá chính
+        // di chuyển cá
         x_coordinates = Gdx.input.getX();
         y_coordinates = Gdx.graphics.getHeight() - Gdx.input.getY();
         if (x_coordinates < size) {
@@ -123,18 +125,19 @@ public class MainScreen implements Screen {
         if (y_coordinates > Gdx.graphics.getHeight() - size) {
             y_coordinates = Gdx.graphics.getHeight() - size;
         }
-        // di chuyển cá
+        // nền
         Gdx.gl.glClearColor(0.1f, 0.637f, 0.9f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        // nền
+        // vẽ cá
         game.batch.begin();
         for (Fish_to_eat fishToEat : fishToEats) {
             fishToEat.render(game.batch);
         }
         game.batch.draw(img, x_coordinates-size/2, y_coordinates-size/2, size, size);
-        // vẽ cá
+        // vẽ điểm, level, quá trình lên level 
         font.draw(game.batch, Integer.toString(score), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-100);
-        font.draw(game.batch, Integer.toString(levelProgress), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-150);
+        font.draw(game.batch, Integer.toString(level+1), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-140);
+        font.draw(game.batch, Integer.toString(levelProgress), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-180);
         game.batch.end();
     }
 
