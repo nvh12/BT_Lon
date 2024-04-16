@@ -17,7 +17,7 @@ public class MainScreen implements Screen {
     private float elapsedTime = 0.0f;
     private static final float UPDATE_INTERVAL = 0.1f;
     public static final float SPEED = 100;
-    public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.3f;
+    public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.5f;
     public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 1f;
     public static final float fish_x = 80, fish_y = 80;
     Texture img;
