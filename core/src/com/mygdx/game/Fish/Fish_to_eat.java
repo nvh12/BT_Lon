@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Fish_to_eat {
-    public static final int SPEED = 300;
+    public static final int SPEED = 500;
     public static final float default_size = 80, size_increase = 0.2f;
     public float level, size;
     private Texture texture;
@@ -23,9 +23,9 @@ public class Fish_to_eat {
         int[] x_value_arr = {0, Gdx.graphics.getWidth()};
         this.x = x_value_arr[x_summon_location];
         this.y = random.nextFloat()*(Gdx.graphics.getHeight()*8/10)+Gdx.graphics.getHeight()/10;
-        this.texture = new Texture("fish"+i+"."+x_summon_location+".png");
-        this.level = random.nextInt(5);
-        this.size = (float)(default_size*(1+level*size_increase));
+        this.texture = new Texture("Fish"+i+"."+x_summon_location+".png");
+        this.level = i;
+        this.size = (float)(default_size*(1+(level-1)*size_increase));
     }
 
     public void update(float deltaTime){

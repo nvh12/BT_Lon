@@ -20,11 +20,11 @@ public class MainScreen implements Screen {
     private float elapsedTime = 0.0f;
     private static final float UPDATE_INTERVAL = 0.1f;
     public static final float SPEED = 100;
-    public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.5f;
+    public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.4f;
     public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 1f;
     public static final float start_size = 80;
     public float size;
-    private int score, level, levelProgress;
+    public static int score, level, levelProgress;
     Texture img;
     Texture background_in_game;
     Random random1 = new Random();
@@ -45,7 +45,7 @@ public class MainScreen implements Screen {
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         score = 0;
-        level = 0;
+        level = 1;
         levelProgress = 0;
         size = start_size;
     }
@@ -96,15 +96,21 @@ public class MainScreen implements Screen {
             if (fishToEat.remove)
                 fishToEatsremove.add(fishToEat);
             float a = fishToEat.x - x_coordinates, b = fishToEat.y - y_coordinates;
-            if(Math.abs(a)<=(fishToEat.size+size)/2 && Math.abs(b)<=(fishToEat.size+size)/2 && level>=fishToEat.level){
-                fishToEatsremove.add(fishToEat);
-                score++;
-                if(level<=3) levelProgress++;
+            if(Math.abs(a)<=(fishToEat.size+size)/2 && Math.abs(b)<=(fishToEat.size+size)/2){
+                if(level>=fishToEat.level){
+                    fishToEatsremove.add(fishToEat);
+                    score++;
+                    if(level<4) levelProgress++;
+                }
+                else{
+                    this.dispose();
+                    game.setScreen(new GameOverScreen(game));
+                }
             }
         }
         fishToEats.removeAll(fishToEatsremove);
         // ăn đủ 10 con thì lên level
-        if(levelProgress == 10 && level <= 3){
+        if(levelProgress == 5 && level < 4){
             levelProgress = 0;
             level++;
             size+=25;
@@ -138,7 +144,7 @@ public class MainScreen implements Screen {
         game.batch.draw(img, x_coordinates-size/2, y_coordinates-size/2, size, size);
         // vẽ điểm, level, quá trình lên level 
         font.draw(game.batch, Integer.toString(score), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-100);
-        font.draw(game.batch, Integer.toString(level+1), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-140);
+        font.draw(game.batch, Integer.toString(level), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-140);
         font.draw(game.batch, Integer.toString(levelProgress), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-180);
         game.batch.end();
     }
@@ -160,7 +166,7 @@ public class MainScreen implements Screen {
     }
 
     public void dispose() {
-
+        
     }
     // Hello
 }
