@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Fish_to_eat {
-    public static final int SPEED = 500;
+    public static final int SPEED = 1200;
     public static final float default_size = 80, size_increase = 0.2f;
     public float level, size;
     private Texture texture;

@@ -20,13 +20,12 @@ public class MainScreen implements Screen {
     private float elapsedTime = 0.0f;
     private static final float UPDATE_INTERVAL = 0.1f;
     public static final float SPEED = 100;
-    public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.4f;
-    public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 1f;
+    public static final float MIN_FISH_TO_EAT_SUMMON_TIME = 0.2f;
+    public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 0.5f;
     public static final float start_size = 80;
     public float size;
-    public static int score, level, levelProgress;
-    Texture img;
-    Texture background_in_game;
+    public int score, level;
+    Texture img, background_in_game;
     Random random1 = new Random();
     float x_coordinates, y_coordinates;
     float fish_summon_timer;
@@ -46,7 +45,6 @@ public class MainScreen implements Screen {
         font.setColor(Color.BLACK);
         score = 0;
         level = 1;
-        levelProgress = 0;
         size = start_size;
     }
 
@@ -99,21 +97,19 @@ public class MainScreen implements Screen {
             if(Math.abs(a)<=(fishToEat.size+size)/2 && Math.abs(b)<=(fishToEat.size+size)/2){
                 if(level>=fishToEat.level){
                     fishToEatsremove.add(fishToEat);
-                    score++;
-                    if(level<4) levelProgress++;
+                    score += fishToEat.level;
                 }
                 else{
                     this.dispose();
-                    game.setScreen(new GameOverScreen(game));
+                    game.setScreen(new GameOverScreen(game, score));
                 }
             }
         }
         fishToEats.removeAll(fishToEatsremove);
         // ăn đủ 10 con thì lên level
-        if(levelProgress == 5 && level < 4){
-            levelProgress = 0;
+        if((score == 10 || score == 40 || score == 100) && level < 4){
             level++;
-            size+=25;
+            size+=16;
         }
 
         // Đặt vị trí cho cá chính
@@ -145,7 +141,6 @@ public class MainScreen implements Screen {
         // vẽ điểm, level, quá trình lên level 
         font.draw(game.batch, Integer.toString(score), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-100);
         font.draw(game.batch, Integer.toString(level), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-140);
-        font.draw(game.batch, Integer.toString(levelProgress), Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-180);
         game.batch.end();
     }
 
