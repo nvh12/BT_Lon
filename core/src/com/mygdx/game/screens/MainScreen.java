@@ -26,6 +26,7 @@ public class MainScreen implements Screen {
     public float size;
     private int score, level, levelProgress;
     Texture img;
+    Texture background_in_game;
     Random random1 = new Random();
     float x_coordinates, y_coordinates;
     float fish_summon_timer;
@@ -40,6 +41,7 @@ public class MainScreen implements Screen {
                 + MIN_FISH_TO_EAT_SUMMON_TIME;
         fishToEats = new ArrayList<Fish_to_eat>();
         img = new Texture("Mainfish1.png");
+        background_in_game = new Texture("Background_in_game.jfif");
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         score = 0;
@@ -50,7 +52,6 @@ public class MainScreen implements Screen {
 
     // Tạo ảnh cá
     public void show() {
-        
         // ảnh cá tạm thời
     }
 
@@ -130,6 +131,7 @@ public class MainScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // vẽ cá
         game.batch.begin();
+        game.batch.draw(background_in_game,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         for (Fish_to_eat fishToEat : fishToEats) {
             fishToEat.render(game.batch);
         }
