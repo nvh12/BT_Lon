@@ -94,7 +94,7 @@ public class MainScreen implements Screen {
             if (fishToEat.remove)
                 fishToEatsremove.add(fishToEat);
             float a = fishToEat.x - x_coordinates, b = fishToEat.y - y_coordinates;
-            if(Math.abs(a)<=(fishToEat.size+size)/2 && Math.abs(b)<=(fishToEat.size+size)/2){
+            if(Math.abs(a)<=(fishToEat.size+size)*7/16 && Math.abs(b)<=(fishToEat.size+size*5/8)/2){
                 if(level>=fishToEat.level){
                     fishToEatsremove.add(fishToEat);
                     score += fishToEat.level;
