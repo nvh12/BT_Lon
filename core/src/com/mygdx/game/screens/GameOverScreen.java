@@ -49,12 +49,20 @@ public class GameOverScreen implements Screen{
         font.draw(game.batch, "High score: " + Integer.toString(highScore), Gdx.graphics.getWidth()*2/5, Gdx.graphics.getHeight()/2);
     if(Gdx.input.getX() >= Gdx.graphics.getWidth()*2/5 && Gdx.input.getX() <= Gdx.graphics.getWidth()*3/5 && Gdx.input.getY() >= Gdx.graphics.getHeight()*47/90 && Gdx.input.getY() <= Gdx.graphics.getHeight()*55/90){
         game.batch.draw(tryAgainInactive, Gdx.graphics.getWidth()*2/5, Gdx.graphics.getHeight()*35/90, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()*8/90);
+        if(Gdx.input.isTouched()){
+            this.dispose();
+            game.setScreen(new MainScreen(game));
+        }
     }
     else{
         game.batch.draw(tryAgainActive, Gdx.graphics.getWidth()*2/5, Gdx.graphics.getHeight()*35/90, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()*8/90);
     }
     if(Gdx.input.getX() >= Gdx.graphics.getWidth()*2/5 && Gdx.input.getX() <= Gdx.graphics.getWidth()*3/5 && Gdx.input.getY() >= Gdx.graphics.getHeight()*2/3 && Gdx.input.getY() <= Gdx.graphics.getHeight()*34/45){
         game.batch.draw(mainMenuInactive, Gdx.graphics.getWidth()*2/5, Gdx.graphics.getHeight()*11/45, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()*8/90);
+        if(Gdx.input.isTouched()){
+            this.dispose();
+            game.setScreen(new MainMenu(game));
+        }
     }
     else{
         game.batch.draw(mainMenuActive, Gdx.graphics.getWidth()*2/5, Gdx.graphics.getHeight()*11/45, Gdx.graphics.getWidth()/5, Gdx.graphics.getHeight()*8/90);
