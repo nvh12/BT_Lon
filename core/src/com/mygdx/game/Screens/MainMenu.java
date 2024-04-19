@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MainMenu implements Screen{
-    private static final int exitButtonSize = Gdx.graphics.getHeight()/24, playButtonSize = Gdx.graphics.getHeight()*5/36;
+    private static final float exitButtonSize = Gdx.graphics.getHeight()/24, playButtonSize = Gdx.graphics.getHeight()*5/36;
     MyGdxGame game;
     Texture exitButtonActive;
     Texture exitButtonInactive;
@@ -45,14 +45,14 @@ public class MainMenu implements Screen{
 
         //nút chơi
         if(Gdx.input.getX() >= Gdx.graphics.getWidth()/2-playButtonSize/2 && Gdx.input.getX() <= Gdx.graphics.getWidth()/2+playButtonSize/2 && Gdx.input.getY() >= Gdx.graphics.getHeight()*2/3-playButtonSize/2 && Gdx.input.getY() <= Gdx.graphics.getHeight()*2/3+playButtonSize/2){
-            game.batch.draw(playButtonInactive, Gdx.graphics.getWidth()/2-playButtonSize/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize, playButtonSize);
+            game.batch.draw(playButtonInactive, Gdx.graphics.getWidth()/2-playButtonSize/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize*1.5f, playButtonSize);
             if(Gdx.input.isTouched()){
                 this.dispose();
                 game.setScreen(new MainScreen(game));
             }
         }
         else{
-            game.batch.draw(playButtonActive, Gdx.graphics.getWidth()/2-playButtonSize/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize, playButtonSize);
+            game.batch.draw(playButtonActive, Gdx.graphics.getWidth()/2-playButtonSize/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize*1.5f, playButtonSize);
         }
 
         game.batch.end();
