@@ -165,8 +165,8 @@ public class MainScreen implements Screen {
         game.batch.draw(mark, X*5/96 + X*19/24*1/16, Y*22/27, X*19/24/160, Y/27);
         game.batch.draw(mark, X*5/96 + X*19/24/4, Y*22/27, X*19/24/160, Y/27);
         game.batch.draw(mark, X*5/96 + X*19/24*5/8, Y*22/27, X*19/24/160, Y/27);
-        font.draw(game.batch, Integer.toString(score), X-100, Y-100);
-        font.draw(game.batch, Integer.toString(level), X-100, Y-140);
+        font.draw(game.batch, "Score: " + Integer.toString(score), X*29/32, Y*15/16);
+        font.draw(game.batch, "Level: " + Integer.toString(level), X*29/32, Y*7/8);
         game.batch.end();
     }
 
