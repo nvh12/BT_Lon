@@ -2,6 +2,7 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,6 +29,7 @@ public class MainScreen implements Screen {
     public static final float FISH_SIZE_IN_NAV_BAR = Y*5/54;
     public float size;
     public int score, level;
+    private Music music_in_main_game,eating_sound;
     Texture img, background_in_game, bar;
     Texture fish1,fish2,fish3,fish4,fish5;
     Texture bar1, bar2, mark;
@@ -65,6 +67,10 @@ public class MainScreen implements Screen {
 
     // Tạo ảnh cá
     public void show() {
+        music_in_main_game = Gdx.audio.newMusic(Gdx.files.internal("Music1.mp3"));
+        eating_sound = Gdx.audio.newMusic(Gdx.files.internal("eating_sound.mp3"));
+        music_in_main_game.setLooping(true);
+        eating_sound.setLooping(false);
         // ảnh cá tạm thời
     }
 
@@ -112,6 +118,7 @@ public class MainScreen implements Screen {
             float a = fishToEat.x - x_coordinates, b = fishToEat.y - y_coordinates;
             if(Math.abs(a)<=(fishToEat.size+size)*7/16 && Math.abs(b)<=(fishToEat.size*3/4+size*5/8)/2){
                 if(level>=fishToEat.level){
+                    eating_sound.play();
                     fishToEatsremove.add(fishToEat);
                     score += fishToEat.level;
                     if((score == 10 || (score >= 40 && score - fishToEat.level < 40) || (score >= 100 && score - fishToEat.level < 100)) && level < 4){
@@ -148,6 +155,7 @@ public class MainScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // vẽ cá
         game.batch.begin();
+        music_in_main_game.play();
         game.batch.draw(background_in_game,0,0,X,Y);
         game.batch.draw(bar,0,NAV_BAR_Y_POSITION,X,Y-NAV_BAR_Y_POSITION);
         game.batch.draw(fish1,X*5/96-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
@@ -187,7 +195,7 @@ public class MainScreen implements Screen {
     }
 
     public void dispose() {
-        
+        music_in_main_game.dispose();
     }
     // Hello
 }
