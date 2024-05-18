@@ -11,10 +11,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class GameOverScreen implements Screen{
     private static final float X = Gdx.graphics.getWidth(), Y =Gdx.graphics.getHeight();
-    private static final Texture gameOverTexture = new Texture("gameover.png");
+    private static final Texture gameOverTexture = new Texture("GameOver.png");
     int score, highScore;
     private BitmapFont font;
     MyGdxGame game;
+    Texture Background;
     Texture tryAgainActive;
     Texture tryAgainInactive;
     Texture mainMenuActive;
@@ -31,10 +32,11 @@ public class GameOverScreen implements Screen{
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         font.getData().setScale(2.0f);
-        tryAgainActive = new Texture("TryAgain.png");
-        tryAgainInactive = new Texture("TryAgain1.png");
-        mainMenuActive = new Texture("Mainmenu.png");
-        mainMenuInactive = new Texture("Mainmenu1.png");
+        Background = new Texture("Main.jpg");
+        tryAgainActive = new Texture("Restart.png");
+        tryAgainInactive = new Texture("Restart1.png");
+        mainMenuActive = new Texture("Menu.png");
+        mainMenuInactive = new Texture("Menu1.png");
     }
     public void show(){
 
@@ -43,6 +45,7 @@ public class GameOverScreen implements Screen{
         Gdx.gl.glClearColor(0, 0, 3, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
+        game.batch.draw(Background, 0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.draw(gameOverTexture, Gdx.graphics.getWidth()/3,  Gdx.graphics.getHeight()*5/8, Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/4);
         font.draw(game.batch, "Score: " + Integer.toString(score), Gdx.graphics.getWidth()*2/5, Gdx.graphics.getHeight()*9/16);
         font.draw(game.batch, "High score: " + Integer.toString(highScore), Gdx.graphics.getWidth()*2/5, Gdx.graphics.getHeight()/2);
@@ -81,6 +84,10 @@ public class GameOverScreen implements Screen{
 
     }
     public void dispose(){
-
+        font.dispose();
+        mainMenuActive.dispose();
+        mainMenuInactive.dispose();
+        tryAgainActive.dispose();
+        tryAgainInactive.dispose();
     }
 }

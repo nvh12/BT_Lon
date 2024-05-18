@@ -8,7 +8,7 @@ import static com.badlogic.gdx.math.MathUtils.random;
 
 public class Fish_to_eat {
     public static final int SPEED = 1200;
-    public static final float default_size = 80, size_increase = 0.25f;
+    public static final float default_size = 80, size_increase = 0.27f;
     public float level, size;
     private Texture texture;
     public float x,y;
@@ -41,6 +41,6 @@ public class Fish_to_eat {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture,x-size/2,y-size/2,size,size);
+        batch.draw(texture,x-size/2,y-size/2,size,size*4/5);
     }
     }

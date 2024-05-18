@@ -26,12 +26,12 @@ public class MainScreen implements Screen {
     public static final float MAX_FISH_TO_EAT_SUMMON_TIME = 0.5f;
     public static final float start_size = Y*2/27;
     private static final float NAV_BAR_Y_POSITION = Y*20/27;
-    public static final float FISH_SIZE_IN_NAV_BAR = Y*5/54;
+    public static final float FISH_SIZE_IN_NAV_BAR = Y*2/27;
     public float size;
     public int score, level;
     private Music music_in_main_game,eating_sound;
     Texture img, background_in_game, bar;
-    Texture fish1,fish2,fish3,fish4,fish5;
+    Texture[] fish;
     Texture bar1, bar2, mark;
     Random random1 = new Random();
     float x_coordinates, y_coordinates;
@@ -47,7 +47,7 @@ public class MainScreen implements Screen {
                 + MIN_FISH_TO_EAT_SUMMON_TIME;
         fishToEats = new ArrayList<Fish_to_eat>();
         img = new Texture("Mainfish1.png");
-        background_in_game = new Texture("Background_in_game.jfif");
+        background_in_game = new Texture("Main.jpg");
         bar = new Texture("Nav_bar.png");
         font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -55,23 +55,21 @@ public class MainScreen implements Screen {
         score = 0;
         level = 1;
         size = start_size;
-        fish1 = new Texture("fish1.0.png");
-        fish2 = new Texture("fish2.0.png");
-        fish3 = new Texture("fish3.0.png");
-        fish4 = new Texture("fish4.0.png");
-        fish5 = new Texture("fish5.0.png");
+        fish = new Texture[5];
+        for(int i = 0; i < 5; i++){
+            fish[i] = new Texture("fish"+(i+1)+".0.png");
+        }
         bar1 = new Texture("GreyBar.png");
         bar2 = new Texture("GreenBar.png");
         mark = new Texture("Untitled.png");
+        music_in_main_game = Gdx.audio.newMusic(Gdx.files.internal("Music1.mp3"));
+        eating_sound = Gdx.audio.newMusic(Gdx.files.internal("eating_sound.mp3"));
+        music_in_main_game.setLooping(true);
     }
 
     // Tạo ảnh cá
     public void show() {
-        music_in_main_game = Gdx.audio.newMusic(Gdx.files.internal("Music1.mp3"));
-        eating_sound = Gdx.audio.newMusic(Gdx.files.internal("eating_sound.mp3"));
-        music_in_main_game.setLooping(true);
-        eating_sound.setLooping(false);
-        // ảnh cá tạm thời
+        music_in_main_game.play();
     }
 
     // Quay cá theo hướng di chuyển của chuột
@@ -116,7 +114,7 @@ public class MainScreen implements Screen {
             if (fishToEat.remove)
                 fishToEatsremove.add(fishToEat);
             float a = fishToEat.x - x_coordinates, b = fishToEat.y - y_coordinates;
-            if(Math.abs(a)<=(fishToEat.size+size)*7/16 && Math.abs(b)<=(fishToEat.size*3/4+size*5/8)/2){
+            if(Math.abs(a)<=(fishToEat.size+size)*7/16 && Math.abs(b)<=(fishToEat.size*4/5+size*5/8)/2){
                 if(level>=fishToEat.level){
                     eating_sound.play();
                     fishToEatsremove.add(fishToEat);
@@ -155,14 +153,13 @@ public class MainScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // vẽ cá
         game.batch.begin();
-        music_in_main_game.play();
         game.batch.draw(background_in_game,0,0,X,Y);
         game.batch.draw(bar,0,NAV_BAR_Y_POSITION,X,Y-NAV_BAR_Y_POSITION);
-        game.batch.draw(fish1,X*5/96-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
-        game.batch.draw(fish2,X*5/96 + X*19/24*1/16-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
-        game.batch.draw(fish3,X*5/96 + X*19/24/4-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
-        game.batch.draw(fish4,X*5/96 + X*19/24*5/8-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
-        game.batch.draw(fish5,X*5/96 + X*19/24-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[0],X*5/96-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[1],X*5/96 + X*19/24*1/16-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR*1.1f,FISH_SIZE_IN_NAV_BAR*1.1f);
+        game.batch.draw(fish[2],X*5/96 + X*19/24/4-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[3],X*5/96 + X*19/24*5/8-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[4],X*5/96 + X*19/24-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
         for (Fish_to_eat fishToEat : fishToEats) {
             fishToEat.render(game.batch);
         }
@@ -196,6 +193,16 @@ public class MainScreen implements Screen {
 
     public void dispose() {
         music_in_main_game.dispose();
+        eating_sound.dispose();
+        img.dispose();
+        background_in_game.dispose();
+        bar.dispose();
+        for(int i = 0; i < 5; i++){
+            fish[i].dispose();
+        }
+        bar1.dispose();
+        bar2.dispose();
+        mark.dispose();
+        font.dispose();
     }
-    // Hello
 }
