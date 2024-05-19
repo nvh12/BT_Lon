@@ -48,14 +48,14 @@ public class MainMenu implements Screen{
 
         //nút chơi
         if(Gdx.input.getX() >= Gdx.graphics.getWidth()/2-playButtonSize*1.8/2 && Gdx.input.getX() <= Gdx.graphics.getWidth()/2+playButtonSize*1.8/2 && Gdx.input.getY() >= Gdx.graphics.getHeight()*2/3-playButtonSize/2 && Gdx.input.getY() <= Gdx.graphics.getHeight()*2/3+playButtonSize/2){
-            game.batch.draw(playButtonActive, Gdx.graphics.getWidth()/2-playButtonSize*1.8f/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize*1.8f, playButtonSize);
+            game.batch.draw(playButtonActive, Gdx.graphics.getWidth()/2-playButtonSize*0.9f, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize*1.8f, playButtonSize*4/5);
             if(Gdx.input.isTouched()){
                 this.dispose();
                 game.setScreen(new MainScreen(game));
             }
         }
         else{
-            game.batch.draw(playButtonInactive, Gdx.graphics.getWidth()/2-playButtonSize*1.8f/2, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize*1.8f, playButtonSize);
+            game.batch.draw(playButtonInactive, Gdx.graphics.getWidth()/2-playButtonSize*0.9f, Gdx.graphics.getHeight()/3-playButtonSize/2, playButtonSize*1.8f, playButtonSize*4/5);
         }
 
         game.batch.end();
