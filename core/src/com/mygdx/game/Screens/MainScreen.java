@@ -31,7 +31,7 @@ public class MainScreen implements Screen {
     public int score, level;
     private Music music_in_main_game,eating_sound;
     Texture img, background_in_game, bar;
-    Texture[] fish;
+    Texture[][] fish;
     Texture bar1, bar2, mark;
     Random random1 = new Random();
     float x_coordinates, y_coordinates;
@@ -46,8 +46,8 @@ public class MainScreen implements Screen {
         fish_summon_timer = random1.nextFloat() * (MAX_FISH_TO_EAT_SUMMON_TIME - MIN_FISH_TO_EAT_SUMMON_TIME)
                 + MIN_FISH_TO_EAT_SUMMON_TIME;
         fishToEats = new ArrayList<Fish_to_eat>();
-        img = new Texture("Mainfish1.png");
         background_in_game = new Texture("Main.jpg");
+        img = new Texture("Mainfish1.png");
         bar = new Texture("Nav_bar.png");
         font = new BitmapFont();
         font.setColor(Color.BLACK);
@@ -55,10 +55,13 @@ public class MainScreen implements Screen {
         score = 0;
         level = 1;
         size = start_size;
-        fish = new Texture[5];
-        for(int i = 0; i < 5; i++){
-            fish[i] = new Texture("fish"+(i+1)+".0.png");
+        fish = new Texture[6][2];
+        for(int i = 1; i <= 5; i++){
+            fish[i][0] = new Texture("fish"+(i)+".0.png");
+            fish[i][1] = new Texture("fish"+(i)+".1.png");
         }
+        fish[0][0] = new Texture("Mainfish1.png");
+        fish[0][1] = new Texture("Mainfish2.png");
         bar1 = new Texture("GreyBar.png");
         bar2 = new Texture("GreenBar.png");
         mark = new Texture("Untitled.png");
@@ -89,11 +92,11 @@ public class MainScreen implements Screen {
             lastMousePosition.x = currentMousePosition.x;
             // Quay chú cá dựa trên độ chênh lệch
             if (deltaX < 0) {
-                img = new Texture("Mainfish2.png");
+                img = fish[0][1];
             }
             if (deltaX > 0) {
                 // Quay sang phải
-                img = new Texture("Mainfish1.png");
+                img = fish[0][0];
             }
             elapsedTime -= UPDATE_INTERVAL;
         }
@@ -155,13 +158,13 @@ public class MainScreen implements Screen {
         game.batch.begin();
         game.batch.draw(background_in_game,0,0,X,Y);
         game.batch.draw(bar,0,NAV_BAR_Y_POSITION,X,Y-NAV_BAR_Y_POSITION);
-        game.batch.draw(fish[0],X*5/96-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
-        game.batch.draw(fish[1],X*5/96 + X*19/24*1/16-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR*1.1f,FISH_SIZE_IN_NAV_BAR*1.1f);
-        game.batch.draw(fish[2],X*5/96 + X*19/24/4-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
-        game.batch.draw(fish[3],X*5/96 + X*19/24*5/8-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
-        game.batch.draw(fish[4],X*5/96 + X*19/24-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[1][0],X*5/96-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[2][0],X*5/96 + X*19/24*1/16-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR*1.1f,FISH_SIZE_IN_NAV_BAR*1.1f);
+        game.batch.draw(fish[3][0],X*5/96 + X*19/24/4-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[4][0],X*5/96 + X*19/24*5/8-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
+        game.batch.draw(fish[5][0],X*5/96 + X*19/24-FISH_SIZE_IN_NAV_BAR/2,Y*27/32,FISH_SIZE_IN_NAV_BAR,FISH_SIZE_IN_NAV_BAR);
         for (Fish_to_eat fishToEat : fishToEats) {
-            fishToEat.render(game.batch);
+            game.batch.draw(fish[fishToEat.level][fishToEat.x_summon_location], fishToEat.x - fishToEat.size/2, fishToEat.y - fishToEat.size/2, fishToEat.size, fishToEat.size*4/5);
         }
         game.batch.draw(img, x_coordinates-size/2, y_coordinates-size/2, size, size);
         // vẽ điểm, level, quá trình lên level 
@@ -197,8 +200,9 @@ public class MainScreen implements Screen {
         img.dispose();
         background_in_game.dispose();
         bar.dispose();
-        for(int i = 0; i < 5; i++){
-            fish[i].dispose();
+        for(int i = 0; i <= 5; i++){
+            fish[i][0].dispose();
+            fish[i][1].dispose();
         }
         bar1.dispose();
         bar2.dispose();

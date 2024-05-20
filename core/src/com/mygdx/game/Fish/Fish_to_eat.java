@@ -1,7 +1,6 @@
 package com.mygdx.game.Fish;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import static com.badlogic.gdx.math.MathUtils.random;
@@ -9,11 +8,10 @@ import static com.badlogic.gdx.math.MathUtils.random;
 public class Fish_to_eat {
     public static final int SPEED = 1200;
     public static final float default_size = 80, size_increase = 0.27f;
-    public float level, size;
-    private Texture texture;
+    public float size;
     public float x,y;
     public boolean remove = false;
-    private int x_summon_location =random.nextInt(2);
+    public int x_summon_location =random.nextInt(2), level;
     public void show(){
     }
 
@@ -23,7 +21,6 @@ public class Fish_to_eat {
         int[] x_value_arr = {0, Gdx.graphics.getWidth()};
         this.x = x_value_arr[x_summon_location];
         this.y = random.nextFloat()*(Gdx.graphics.getHeight()*6.25f/10)+Gdx.graphics.getHeight()/10;
-        this.texture = new Texture("Fish"+i+"."+x_summon_location+".png");
         this.level = i;
         this.size = (float)(default_size*(1+(level-1)*size_increase));
     }
@@ -41,6 +38,5 @@ public class Fish_to_eat {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture,x-size/2,y-size/2,size,size*4/5);
     }
     }
