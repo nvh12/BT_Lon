@@ -8,8 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 	   Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 	   config.setTitle("Feeding frenzy");
-	   config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-	   //config.setWindowedMode(1280, 720); //set 1920x1080 nếu muốn
+	   //config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
+	   config.setWindowedMode(1920, 1080); //set 1920x1080 nếu muốn
 	   config.useVsync(true);
 	   config.setForegroundFPS(60);
 	   config.setResizable(false);
